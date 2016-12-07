@@ -1,8 +1,6 @@
 package ru.yandex.vasily.danilin.netcracker;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /***
  * Created by Vasily Danilin on 05.12.2016.

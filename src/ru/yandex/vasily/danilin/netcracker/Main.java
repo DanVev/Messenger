@@ -1,7 +1,5 @@
 package ru.yandex.vasily.danilin.netcracker;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /***
@@ -9,6 +7,7 @@ import java.util.GregorianCalendar;
  */
 public class Main {
     public static void main(String[] args) {
+
         Person person1 = new Person("Vasily", "Danilin", new GregorianCalendar(1996, 6, 25));
         Person person2 = new Person("Olga", "Kiseleva", new GregorianCalendar(1996, 7, 3));
         Conference conf = new Conference("Private chat");

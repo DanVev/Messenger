@@ -10,7 +10,7 @@ public class Message {
     private Person sender;
     private String text;
     private Calendar date;
-    private Person reciever;
+    private Person receiver;
 
     public Message(Person sender, String text) {
         this.sender = sender;
@@ -18,10 +18,10 @@ public class Message {
         this.date = new GregorianCalendar();
     }
 
-    public Message(Person sender, String text, Person reciever) {
+    public Message(Person sender, String text, Person receiver) {
         this.sender = sender;
         this.text = text;
-        this.reciever = reciever;
+        this.receiver = receiver;
         this.date = new GregorianCalendar();
     }
 
@@ -33,16 +33,16 @@ public class Message {
         return text;
     }
 
-    public Person getReciever() {
-        return reciever;
+    public Person getReceiver() {
+        return receiver;
     }
 
     public void setText(String text) {
         this.text = text;
     }
 
-    public void setReciever(Person receiver) {
-        this.reciever = receiver;
+    public void setReceiver(Person receiver) {
+        this.receiver = receiver;
     }
 
     @Override

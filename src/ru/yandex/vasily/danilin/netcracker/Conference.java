@@ -6,9 +6,9 @@ import java.util.ArrayList;
  * Created by Vasily Danilin on 06.12.2016.
  */
 public class Conference {
-    private ArrayList<Person> people = new ArrayList<Person>();
+    private ArrayList<Person> people = new ArrayList<>();
     private String name;
-    private ArrayList<Message> messages = new ArrayList<Message>();
+    private ArrayList<Message> messages = new ArrayList<>();
 
     public ArrayList<Person> getPeople() {
         return people;
