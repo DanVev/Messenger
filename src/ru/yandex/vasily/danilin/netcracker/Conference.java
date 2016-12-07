@@ -1,14 +1,13 @@
 package ru.yandex.vasily.danilin.netcracker;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 /***
  * Created by Vasily Danilin on 06.12.2016.
  */
 public class Conference {
-    ArrayList<Person> people;
-    String name;
+    private ArrayList<Person> people;
+    private String name;
 
     public ArrayList<Person> getPeople() {
         return people;
