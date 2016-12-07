@@ -17,7 +17,7 @@ public class Main {
         person1.sendMessage("Hello, Olya!", conf);
         person2.sendMessage("Hi, Vasya!", conf);
         for (Message m : conf.getMessages()) {
-            System.out.println(m.getText());
+            System.out.println(m);
         }
     }
 }
