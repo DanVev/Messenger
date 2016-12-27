@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Vector;
 
 public class Swing extends JFrame implements ActionListener {
     JTextField textField;
@@ -19,6 +20,9 @@ public class Swing extends JFrame implements ActionListener {
     JButton createChat;
     JComboBox<Person> userChoser;
     JComboBox<Conference> confChoser;
+    Vector<Person> allPersons = new Vector<>(DataBase.getInstance().getPersons());
+    Vector<Conference> userConferences;
+
     public Swing() {
         super("Messenger");
         setSize(630, 550);
@@ -47,11 +51,22 @@ public class Swing extends JFrame implements ActionListener {
         GridLayout gl = new GridLayout(2, 3, 20, 5);
         grid.setLayout(gl);
         // TODO: load users
-        userChoser = new JComboBox<>();
+        userChoser = new JComboBox<>(allPersons);
         userChoser.setPreferredSize(new Dimension(80, 25));
+        userChoser.setActionCommand("Changed user");
+        userChoser.addActionListener(this);
         // TODO: load confs
-        confChoser = new JComboBox<>();
-        confChoser.setPreferredSize(new Dimension(80, 25));
+        Person sel = (Person) userChoser.getSelectedItem();
+        if (!sel.equals(null)) {
+            userConferences = new Vector<>(sel.getConferences());
+            confChoser = new JComboBox<>(userConferences);
+            confChoser.setActionCommand("Changed conference");
+            confChoser.addActionListener(this);
+            confChoser.setEnabled(true);
+        } else {
+            confChoser = new JComboBox<>();
+            confChoser.setEnabled(false);
+        }
 
         createUser = new JButton("Create a User");
         createUser.setPreferredSize(new Dimension(90, 25));
@@ -68,25 +83,35 @@ public class Swing extends JFrame implements ActionListener {
 
         JTextField textField = new JTextField();
         textField.setEditable(false);
-        textField.setPreferredSize(new Dimension(550, 275));
+        textField.setPreferredSize(new Dimension(550, 375));
         add(textField);
 
         JTextField textMessage = new JTextField();
-        textMessage.setPreferredSize(new Dimension(450, 150));
+        textMessage.setPreferredSize(new Dimension(450, 50));
         add(textMessage);
 
         JButton sendButton = new JButton("Send");
         sendButton.setPreferredSize(new Dimension(100, 50));
-        sendButton.addActionListener(this);
         sendButton.setActionCommand("Send a Message");
+        sendButton.addActionListener(this);
         add(sendButton);
         setVisible(true);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if ("send a Mesage".equals(e.getActionCommand())) {
+
+        }
+        if ("Changed user".equals(e.getActionCommand())) {
+
+            userConferences = new Vector<Conference>(((Person) userChoser.getSelectedItem()).getConferences());
+            update(this.getGraphics());
+            ((JComboBox) e.getSource()).updateUI();
+            System.out.print("1");
+
+        }
+        if ("Changed conference".equals(e.getActionCommand())) {
 
         }
     }

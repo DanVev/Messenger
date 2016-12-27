@@ -22,6 +22,7 @@ public class Conference {
 
         this.name = name;
         this.people.add(creator);
+        DataBase.getInstance().addConference(this);
     }
 
     public Conference(ArrayList<Person> people, String name, ArrayList<Message> messages) {
@@ -40,5 +41,10 @@ public class Conference {
 
     public ArrayList<Message> getMessages() {
         return messages;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -28,6 +28,7 @@ public class Person {
         this.surname = surname;
         this.birthdate = birthdate;
         countId++;
+        DataBase.getInstance().addPerson(this);
     }
 
     public String getName() {
@@ -66,7 +67,7 @@ public class Person {
         return conferences;
     }
 
-    private boolean addConference(Conference conf) {
+    public boolean addConference(Conference conf) {
         conferences.add(conf);
         return true;
     }
@@ -99,6 +100,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return name + " " + surname + " (id = " + this.id + ")";
+        return name + " " + surname;
     }
 }

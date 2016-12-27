@@ -11,14 +11,6 @@ public class Main {
 
         DataBase data = DataBase.getInstance();
         data.load("MyTest");
-//        for (Person p : data.getPersons())
-//            System.out.println(p);
-//        data.readConferenceXML("MyTestConferences.xml");
-//
-//        Conference conf = data.getConferences().get(0);
-//        for (Message m : conf.getMessages()) {
-//            System.out.println(m);
-//        }
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

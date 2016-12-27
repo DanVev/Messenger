@@ -218,7 +218,10 @@ public class DataBase {
                     Calendar date = new GregorianCalendar(Integer.parseInt(rawDate[0]), Integer.parseInt(rawDate[1]), Integer.parseInt(rawDate[2]), Integer.parseInt(rawDate[3]), Integer.parseInt(rawDate[4]));
                     messages.add(new Message(sender, mText, date));
                 }
-                this.conferences.add(new Conference(persons, confName, messages));
+                Conference nConf = new Conference(persons, confName, messages);
+                for (Person p : nConf.getPeople())
+                    p.addConference(nConf);
+                this.conferences.add(nConf);
             }
 
         } catch (ParserConfigurationException | SAXException | IOException e) {
