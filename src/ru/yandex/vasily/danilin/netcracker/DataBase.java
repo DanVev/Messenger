@@ -1,9 +1,15 @@
 package ru.yandex.vasily.danilin.netcracker;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import javax.xml.parsers.*;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
@@ -28,6 +34,14 @@ public class DataBase {
         conferences = new ArrayList<>();
     }
 
+    public ArrayList<Person> getPersons() {
+        return persons;
+    }
+
+    public ArrayList<Conference> getConferences() {
+        return conferences;
+    }
+
     public void addPerson(Person p) {
         persons.add(p);
     }
@@ -42,6 +56,7 @@ public class DataBase {
 
         // instance of a DocumentBuilderFactory
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setValidating(false);
         try {
             // use factory to get an instance of document builder
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -75,10 +90,8 @@ public class DataBase {
                 tr.transform(new DOMSource(dom),
                         new StreamResult(new FileOutputStream(xml)));
 
-            } catch (TransformerException te) {
+            } catch (TransformerException | IOException te) {
                 System.out.println(te.getMessage());
-            } catch (IOException ioe) {
-                System.out.println(ioe.getMessage());
             }
         } catch (ParserConfigurationException pce) {
             System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
@@ -91,6 +104,7 @@ public class DataBase {
 
         // instance of a DocumentBuilderFactory
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        dbf.setValidating(false);
         try {
             // use factory to get an instance of document builder
             DocumentBuilder db = dbf.newDocumentBuilder();
@@ -131,21 +145,44 @@ public class DataBase {
                 tr.setOutputProperty(OutputKeys.INDENT, "yes");
                 tr.setOutputProperty(OutputKeys.METHOD, "xml");
                 tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "persons.dtd");
+                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "conferences.dtd");
                 tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
                 // send DOM to file
                 tr.transform(new DOMSource(dom),
                         new StreamResult(new FileOutputStream(xml)));
 
-            } catch (TransformerException te) {
+            } catch (TransformerException | IOException te) {
                 System.out.println(te.getMessage());
-            } catch (IOException ioe) {
-                System.out.println(ioe.getMessage());
             }
         } catch (ParserConfigurationException pce) {
             System.out.println("UsersXML: Error trying to instantiate DocumentBuilder " + pce);
         }
+    }
+
+    public void readPersonXML(String xml) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setValidating(false);
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            File file = new File(xml);
+            Document doc = builder.parse(file);
+            doc.getDocumentElement().normalize();
+            NodeList persons = doc.getElementsByTagName("person");
+            for (int temp = 0; temp < persons.getLength(); temp++) {
+                Node nNode = persons.item(temp);
+                Element e = (Element) nNode;
+                String[] rawDate = e.getAttribute("birthdate").split(" ");
+                GregorianCalendar birthdate = new GregorianCalendar(Integer.parseInt(rawDate[0]), Integer.parseInt(rawDate[1]), Integer.parseInt(rawDate[2]));
+                this.persons.add(new Person(Integer.parseInt(e.getAttribute("id")), e.getAttribute("name"),
+                        e.getAttribute("surname"), birthdate));
+            }
+
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+
+
     }
 
 }
