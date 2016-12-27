@@ -2,4 +2,7 @@
 <persons>
     <person birthdate="1996 6 25" id="0" name="Vasily" surname="Danilin"/>
     <person birthdate="1996 7 3" id="1" name="Olga" surname="Kiseleva"/>
+    <person birthdate="1900 1 1" id="2" name="Alex" surname="Petrov"/>
+    <person birthdate="1900 1 1" id="3" name="Sergey" surname="Ivanov"/>
+    <person birthdate="1900 1 1" id="4" name="Marina" surname="Nosova"/>
 </persons>

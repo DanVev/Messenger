@@ -10,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.GregorianCalendar;
 import java.util.Vector;
 
 public class Swing extends JFrame implements ActionListener {
@@ -70,7 +71,11 @@ public class Swing extends JFrame implements ActionListener {
 
         createUser = new JButton("Create a User");
         createUser.setPreferredSize(new Dimension(90, 25));
+        createUser.setActionCommand("Create a User");
+
         createChat = new JButton("Create a Chat");
+        createChat.setActionCommand("Create a Chat");
+
         createChat.setPreferredSize(new Dimension(90, 25));
         grid.add(new JLabel("Choose the User"));
         grid.add(userChoser);
@@ -79,8 +84,8 @@ public class Swing extends JFrame implements ActionListener {
         grid.add(confChoser);
         grid.add(createChat);
         add(grid);
-
-
+        createUser.addActionListener(this);
+        createUser.addActionListener(this);
         textField = new JTextArea();
         textField.setEditable(false);
         textField.setLineWrap(true);
@@ -100,6 +105,7 @@ public class Swing extends JFrame implements ActionListener {
         sendButton.addActionListener(this);
         add(sendButton);
         setVisible(true);
+
     }
 
     @Override
@@ -110,17 +116,38 @@ public class Swing extends JFrame implements ActionListener {
             Message m = sender.sendMessage(textMessage.getText(), conf);
             textField.setText(textField.getText() + m.getGUIMessage());
             textMessage.setText("");
-            textField.updateUI();
+            //textField.updateUI();
         }
         if ("Changed user".equals(e.getActionCommand())) {
 
             userConferences = new Vector<Conference>(((Person) userChoser.getSelectedItem()).getConferences());
-            update(this.getGraphics());
-            ((JComboBox) e.getSource()).updateUI();
-            System.out.print("1");
+            confChoser.setModel(new DefaultComboBoxModel<>(userConferences));
+            if (confChoser.getSelectedItem() != null) confChoser.setSelectedIndex(0);
+            else textField.setText("");
+
+
 
         }
         if ("Changed conference".equals(e.getActionCommand())) {
+            textField.setText("");
+            for (Message m : ((Conference) confChoser.getSelectedItem()).getMessages())
+                textField.setText(textField.getText() + m.getGUIMessage());
+        }
+        if ("Create a User".equals(e.getActionCommand())) {
+            String name = "";
+            String surname = "";
+            while (name.length() == 0)
+                name = (String) JOptionPane.showInputDialog("Insert name of new user: ");
+
+
+            while (surname.length() == 0)
+                surname = (String) JOptionPane.showInputDialog("Insert surname of new user: ");
+
+            Person p = new Person(name, surname, new GregorianCalendar(1900, 1, 1));
+            allPersons = new Vector<>(DataBase.getInstance().getPersons());
+            userChoser.setModel(new DefaultComboBoxModel<>(allPersons));
+        }
+        if ("Create a Chat".equals(e.getActionCommand())) {
 
         }
     }
