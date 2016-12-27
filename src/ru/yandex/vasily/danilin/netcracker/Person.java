@@ -13,7 +13,7 @@ public class Person {
     private String name;
     private String surname;
     private Calendar birthdate;
-    private ArrayList<Conference> conferences;
+    private ArrayList<Conference> conferences = new ArrayList<>();
 
     public Person(String name, String surname, Calendar birthdate) {
         this.name = name;
