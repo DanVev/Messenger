@@ -17,6 +17,11 @@ public class Message {
         this.date = new GregorianCalendar();
     }
 
+    public Message(Person sender, String text, Calendar date) {
+        this.sender = sender;
+        this.text = text;
+        this.date = date;
+    }
 
     public Person getSender() {
         return sender;
@@ -46,8 +51,9 @@ public class Message {
         result += date.get(GregorianCalendar.MONTH);
         result += " ";
         result += date.get(GregorianCalendar.DAY_OF_MONTH);
-        result += date.get(GregorianCalendar.HOUR);
-        result += "";
+        result += " ";
+        result += date.get(GregorianCalendar.HOUR_OF_DAY);
+        result += " ";
         result += date.get(GregorianCalendar.MINUTE);
         return result;
     }

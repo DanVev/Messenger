@@ -18,15 +18,18 @@ public class Main {
         DataBase data = DataBase.getInstance();
         data.readPersonXML("MyTestPersons.xml");
         for (Person p : data.getPersons())
-            System.out.println(p + p.getParsedBirthDate());
+            System.out.println(p);
+        data.readConferenceXML("MyTestConferences.xml");
+
 //        data.addPerson(person1);
 //        data.addPerson(person2);
 //        data.savePersonsToXML("MyTestPersons.xml");
 //        data.addConference(conf);
 //        data.saveConferencesToXML("MyTestConferences.xml");
-//        for (Message m : conf.getMessages()) {
-//            System.out.println(m);
-//        }
+        Conference conf = data.getConferences().get(0);
+        for (Message m : conf.getMessages()) {
+            System.out.println(m);
+        }
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {

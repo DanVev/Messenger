@@ -24,6 +24,12 @@ public class Conference {
         this.people.add(creator);
     }
 
+    public Conference(ArrayList<Person> people, String name, ArrayList<Message> messages) {
+        this.people = people;
+        this.name = name;
+        this.messages = messages;
+    }
+
     public void addMessage(Message m) {
         messages.add(m);
     }

@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import javax.xml.parsers.*;
 import javax.xml.stream.XMLInputFactory;
@@ -83,7 +84,7 @@ public class DataBase {
                 tr.setOutputProperty(OutputKeys.INDENT, "yes");
                 tr.setOutputProperty(OutputKeys.METHOD, "xml");
                 tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "persons.dtd");
+                //tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "persons.dtd");
                 tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
                 // send DOM to file
@@ -145,7 +146,7 @@ public class DataBase {
                 tr.setOutputProperty(OutputKeys.INDENT, "yes");
                 tr.setOutputProperty(OutputKeys.METHOD, "xml");
                 tr.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-                tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "conferences.dtd");
+                //tr.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, "conferences.dtd");
                 tr.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
 
                 // send DOM to file
@@ -181,8 +182,48 @@ public class DataBase {
         } catch (ParserConfigurationException | SAXException | IOException e) {
             System.out.println(e.getMessage());
         }
+    }
 
+    public void readConferenceXML(String xml) {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        factory.setValidating(false);
+        try {
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            File file = new File(xml);
+            Document doc = builder.parse(file);
+            doc.getDocumentElement().normalize();
+            NodeList confs = doc.getElementsByTagName("conference");
+            for (int temp = 0; temp < confs.getLength(); temp++) {
+                ArrayList<Person> persons = new ArrayList<>();
+                ArrayList<Message> messages = new ArrayList<>();
+                Node nNode = confs.item(temp);
+                Element e = (Element) nNode;
+                String confName = e.getAttribute("name");
+                NodeList nMessages = e.getElementsByTagName("message");
+                NodeList nPersons = e.getElementsByTagName("person");
+                for (int i = 0; i < nPersons.getLength(); i++) {
+                    Element nPerson = (Element) nPersons.item(i);
+                    int id = Integer.parseInt(nPerson.getAttribute("id"));
+                    for (Person p : this.persons)
+                        if (p.getId() == id) persons.add(p);
+                }
+                for (int i = 0; i < nMessages.getLength(); i++) {
+                    Element nMessage = (Element) nMessages.item(i);
+                    String mText = nMessage.getTextContent();
+                    int senderId = Integer.parseInt(nMessage.getAttribute("sender"));
+                    Person sender = null;
+                    for (Person p : this.persons)
+                        if (p.getId() == senderId) sender = p;
+                    String[] rawDate = nMessage.getAttribute("date").split(" ");
+                    Calendar date = new GregorianCalendar(Integer.parseInt(rawDate[0]), Integer.parseInt(rawDate[1]), Integer.parseInt(rawDate[2]), Integer.parseInt(rawDate[3]), Integer.parseInt(rawDate[4]));
+                    messages.add(new Message(sender, mText, date));
+                }
+                this.conferences.add(new Conference(persons, confName, messages));
+            }
 
+        } catch (ParserConfigurationException | SAXException | IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }
