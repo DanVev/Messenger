@@ -13,7 +13,7 @@ import java.awt.event.WindowEvent;
 import java.util.Vector;
 
 public class Swing extends JFrame implements ActionListener {
-    JTextField textField;
+    JTextArea textField;
     JTextField textMessage;
     JButton sendButton;
     JButton createUser;
@@ -81,7 +81,7 @@ public class Swing extends JFrame implements ActionListener {
         add(grid);
 
 
-        JTextArea textField = new JTextArea();
+        textField = new JTextArea();
         textField.setEditable(false);
         textField.setLineWrap(true);
         textField.setFont(new Font(Font.DIALOG, Font.PLAIN, 15));
@@ -90,11 +90,11 @@ public class Swing extends JFrame implements ActionListener {
             textField.setText(textField.getText() + m.getGUIMessage());
         add(textField);
 
-        JTextField textMessage = new JTextField();
+        textMessage = new JTextField();
         textMessage.setPreferredSize(new Dimension(450, 50));
         add(textMessage);
 
-        JButton sendButton = new JButton("Send");
+        sendButton = new JButton("Send");
         sendButton.setPreferredSize(new Dimension(100, 50));
         sendButton.setActionCommand("Send a Message");
         sendButton.addActionListener(this);
@@ -104,8 +104,13 @@ public class Swing extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if ("send a Mesage".equals(e.getActionCommand())) {
-
+        if ("Send a Message".equals(e.getActionCommand())) {
+            Conference conf = (Conference) confChoser.getSelectedItem();
+            Person sender = (Person) userChoser.getSelectedItem();
+            Message m = sender.sendMessage(textMessage.getText(), conf);
+            textField.setText(textField.getText() + m.getGUIMessage());
+            textMessage.setText("");
+            textField.updateUI();
         }
         if ("Changed user".equals(e.getActionCommand())) {
 

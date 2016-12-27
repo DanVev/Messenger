@@ -82,9 +82,10 @@ public class Person {
         this.conferences = conferences;
     }
 
-    public void sendMessage(String text, Conference conf) {
+    public Message sendMessage(String text, Conference conf) {
         Message mes = new Message(this, text);
         conf.addMessage(mes);
+        return mes;
 
     }
 

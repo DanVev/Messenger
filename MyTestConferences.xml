@@ -8,6 +8,7 @@
         <messages>
             <message date="2016 11 27 18 7" sender="0">Hello, Olya!</message>
             <message date="2016 11 27 18 7" sender="1">Hi, Vasya!</message>
+            <message date="2016 11 27 21 40" sender="0">How are you?</message>
         </messages>
     </conference>
     <conference name="Alone Chat">
