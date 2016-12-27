@@ -226,4 +226,15 @@ public class DataBase {
         }
     }
 
+    public void save(String name)
+    {
+        savePersonsToXML(name+ "Persons.xml");
+        saveConferencesToXML(name + "Conferences.xml");
+    }
+
+    public void load(String name)
+    {
+        readPersonXML(name+ "Persons.xml");
+        readConferenceXML(name + "Conferences.xml");
+    }
 }

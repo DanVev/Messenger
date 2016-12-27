@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<conferences>
+    <conference name="Private Chat">
+        <persons>
+            <person id="0"/>
+            <person id="1"/>
+        </persons>
+        <messages>
+            <message date="2016 11 27 18 7" sender="0">Hello, Olya!</message>
+            <message date="2016 11 27 18 7" sender="1">Hi, Vasya!</message>
+        </messages>
+    </conference>
+</conferences>

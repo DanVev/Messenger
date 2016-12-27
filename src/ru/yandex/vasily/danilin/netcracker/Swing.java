@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Swing extends JFrame implements ActionListener {
     JTextField textField;
@@ -21,7 +23,25 @@ public class Swing extends JFrame implements ActionListener {
         super("Messenger");
         setSize(630, 550);
         setLocation(150, 100);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                JFrame frame = (JFrame) e.getSource();
+
+                int result = JOptionPane.showConfirmDialog(
+                        frame,
+                        "Are you sure you want to exit the application?",
+                        "Exit Application"
+                        ,
+                        JOptionPane.YES_NO_OPTION);
+
+                if (result == JOptionPane.YES_OPTION) {
+                    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                    DataBase.getInstance().save("MyTest");
+                }
+            }
+        });
+
         setLayout(new FlowLayout(FlowLayout.CENTER));
         JPanel grid = new JPanel();
         GridLayout gl = new GridLayout(2, 3, 20, 5);
