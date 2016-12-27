@@ -4,6 +4,7 @@ import sun.plugin.javascript.navig.Array;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /***
@@ -68,6 +69,16 @@ public class Person {
         Message mes = new Message(this, text);
         conf.addMessage(mes);
 
+    }
+
+    public String getParsedBirthDate() {
+        String result = "";
+        result += birthdate.get(GregorianCalendar.YEAR);
+        result += " ";
+        result += birthdate.get(GregorianCalendar.MONTH);
+        result += " ";
+        result += birthdate.get(GregorianCalendar.DAY_OF_MONTH);
+        return result;
     }
 
     @Override

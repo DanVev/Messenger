@@ -15,6 +15,10 @@ public class Main {
         conf.addPerson(person2);
         person1.sendMessage("Hello, Olya!", conf);
         person2.sendMessage("Hi, Vasya!", conf);
+        DataBase Data = DataBase.getInstance();
+        Data.addPerson(person1);
+        Data.addPerson(person2);
+        Data.savePersonsToXML("MyTestPersons.xml");
         for (Message m : conf.getMessages()) {
             System.out.println(m);
         }
