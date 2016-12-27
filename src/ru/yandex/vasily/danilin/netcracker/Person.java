@@ -55,7 +55,9 @@ public class Person {
     }
 
     public Conference createConference(String name) {
-        return new Conference(name, this);
+        Conference c = new Conference(name, this);
+        this.addConference(c);
+        return c;
     }
 
     public void setConferences(ArrayList<Conference> conferences) {

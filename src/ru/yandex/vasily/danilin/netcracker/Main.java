@@ -11,8 +11,7 @@ public class Main {
 
         Person person1 = new Person("Vasily", "Danilin", new GregorianCalendar(1996, 6, 25));
         Person person2 = new Person("Olga", "Kiseleva", new GregorianCalendar(1996, 7, 3));
-        Conference conf = new Conference("Private chat");
-        conf.addPerson(person1);
+        Conference conf = person1.createConference("Private Chat");
         conf.addPerson(person2);
         person1.sendMessage("Hello, Olya!", conf);
         person2.sendMessage("Hi, Vasya!", conf);
