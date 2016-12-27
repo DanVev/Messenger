@@ -10,7 +10,6 @@ public class Message {
     private Person sender;
     private String text;
     private Calendar date;
-    private Person receiver;
 
     public Message(Person sender, String text) {
         this.sender = sender;
@@ -18,12 +17,6 @@ public class Message {
         this.date = new GregorianCalendar();
     }
 
-    public Message(Person sender, String text, Person receiver) {
-        this.sender = sender;
-        this.text = text;
-        this.receiver = receiver;
-        this.date = new GregorianCalendar();
-    }
 
     public Person getSender() {
         return sender;
@@ -33,20 +26,29 @@ public class Message {
         return text;
     }
 
-    public Person getReceiver() {
-        return receiver;
-    }
-
     public void setText(String text) {
         this.text = text;
-    }
-
-    public void setReceiver(Person receiver) {
-        this.receiver = receiver;
     }
 
     @Override
     public String toString() {
         return "'" + text + "' by " + sender + " at " + date.getTime();
+    }
+
+    public Calendar getDate() {
+        return date;
+    }
+
+    public String getParsedDate() {
+        String result = "";
+        result += date.get(GregorianCalendar.YEAR);
+        result += " ";
+        result += date.get(GregorianCalendar.MONTH);
+        result += " ";
+        result += date.get(GregorianCalendar.DAY_OF_MONTH);
+        result += date.get(GregorianCalendar.HOUR);
+        result += "";
+        result += date.get(GregorianCalendar.MINUTE);
+        return result;
     }
 }
