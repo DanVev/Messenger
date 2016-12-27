@@ -1,5 +1,6 @@
 package ru.yandex.vasily.danilin.netcracker;
 
+import javax.swing.*;
 import java.util.GregorianCalendar;
 
 /***
@@ -18,5 +19,11 @@ public class Main {
         for (Message m : conf.getMessages()) {
             System.out.println(m);
         }
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new Swing();
+            }
+        });
     }
 }

@@ -1,6 +1,10 @@
 package ru.yandex.vasily.danilin.netcracker;
 
+import sun.plugin.javascript.navig.Array;
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /***
  * Created by Vasily Danilin on 05.12.2016.
@@ -8,8 +12,8 @@ import java.util.Calendar;
 public class Person {
     private String name;
     private String surname;
-    private int a;
     private Calendar birthdate;
+    private ArrayList<Conference> conferences;
 
     public Person(String name, String surname, Calendar birthdate) {
         this.name = name;
@@ -41,10 +45,29 @@ public class Person {
         this.birthdate = birthdate;
     }
 
+    public ArrayList<Conference> getConferences() {
+        return conferences;
+    }
+
+    private boolean addConference(Conference conf) {
+        conferences.add(conf);
+        return true;
+    }
+
+    public Conference createConference(String name) {
+        return new Conference(name, this);
+    }
+
+    public void setConferences(ArrayList<Conference> conferences) {
+        this.conferences = conferences;
+    }
+
     public void sendMessage(String text, Conference conf) {
         Message mes = new Message(this, text);
         conf.addMessage(mes);
+
     }
+
     @Override
     public String toString() {
         return name + " " + surname;

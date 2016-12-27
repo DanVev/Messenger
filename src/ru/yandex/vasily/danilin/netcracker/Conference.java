@@ -18,9 +18,10 @@ public class Conference {
         return name;
     }
 
-    public Conference(String name) {
+    public Conference(String name, Person creator) {
 
         this.name = name;
+        this.people.add(creator);
     }
 
     public void addMessage(Message m) {
