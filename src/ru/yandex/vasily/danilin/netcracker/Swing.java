@@ -81,9 +81,13 @@ public class Swing extends JFrame implements ActionListener {
         add(grid);
 
 
-        JTextField textField = new JTextField();
+        JTextArea textField = new JTextArea();
         textField.setEditable(false);
+        textField.setLineWrap(true);
+        textField.setFont(new Font(Font.DIALOG, Font.PLAIN, 15));
         textField.setPreferredSize(new Dimension(550, 375));
+        for (Message m : ((Conference) confChoser.getSelectedItem()).getMessages())
+            textField.setText(textField.getText() + m.getGUIMessage());
         add(textField);
 
         JTextField textMessage = new JTextField();

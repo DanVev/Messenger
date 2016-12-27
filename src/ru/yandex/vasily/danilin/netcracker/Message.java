@@ -57,4 +57,11 @@ public class Message {
         result += date.get(GregorianCalendar.MINUTE);
         return result;
     }
+
+    public String getGUIMessage() {
+        String minutes = String.valueOf(date.get(GregorianCalendar.MINUTE));
+        if (minutes.length() == 1) minutes = "0" + minutes;
+
+        return "" + sender + " at " + date.get(GregorianCalendar.HOUR_OF_DAY) + ":" + minutes + " on " + date.get(GregorianCalendar.DAY_OF_MONTH) + "." + date.get(GregorianCalendar.MONTH) + "." + date.get(GregorianCalendar.YEAR) + "\n" + text + "\n";
+    }
 }
